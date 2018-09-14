@@ -1,6 +1,10 @@
-import {Email_Changed, Password_Changed} from '../Actions/Constants'
+import {Email_Changed, Password_Changed, Login_Success} from '../Actions/Constants'
 
-const Initial_state ={email:''}
+const Initial_state ={
+    email:'',
+    password:'',
+    user:''
+}
 
 export const EmailChangedReducer = (state=Initial_state,action)=>{
     switch(action.type){
@@ -8,7 +12,10 @@ export const EmailChangedReducer = (state=Initial_state,action)=>{
         return {...state , email:action.payload};
         
         case Password_Changed :
-        return {...state,password:action.payload}
+        return {...state, password:action.payload}
+        
+        case Login_Success :
+        return {...state,user:action.payload}
         
         default:
         return state;

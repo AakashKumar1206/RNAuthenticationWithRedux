@@ -5,7 +5,7 @@ import firebase from 'firebase';
 import Input from  './Input';
 import CardSection from './CardSection'
 import Button from './Button';
-import {emailChanged,passwordChanged} from '../Actions'
+import {emailChanged,passwordChanged,loginUser} from '../Actions'
 
 
 class LoginForm extends Component{
@@ -17,6 +17,14 @@ class LoginForm extends Component{
 
     passwordInput(text){
         this.props.passwordChanged(text)
+    
+    }
+
+
+    loginUserInput(){
+        const {email,password} =this.props;
+
+        this.props.loginUser({email,password})
     }
     render(){
         return(
@@ -38,7 +46,7 @@ class LoginForm extends Component{
             </CardSection>
 
             <CardSection>
-                <Button>Login</Button>
+                <Button onPress={this.loginUserInput.bind(this)}>Login</Button>
             </CardSection>
             </View>
         )
@@ -54,6 +62,9 @@ InputField:{
 }
 
 const mapStateToProps = state => {
-  return { email:state.auth.email, password:state.auth.password}
+  return { email:state.auth.email, 
+            password:state.auth.password, 
+            user:state.auth.user
+        }
 };
-export default connect(mapStateToProps,{emailChanged, passwordChanged})(LoginForm)
+export default connect(mapStateToProps,{emailChanged, passwordChanged ,loginUser})(LoginForm)
