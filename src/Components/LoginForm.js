@@ -30,13 +30,13 @@ class LoginForm extends Component{
     showError(){
        
             <View>
-                <Text style={{color:"red"}}>{this.props.error}</Text>
+                <Text style={styles.errorTextStyle}>{this.props.error}</Text>
             </View>
         
     }
 
     renderButton(){
-        if(this.props.loading===true){
+        if(this.props.loading){
             return <Spinner size="large" />
         }
 
@@ -82,8 +82,16 @@ InputField:{
     flex:1,
     justifyContent: 'flex-start',
     alignItems: 'flex-start',
+},
+errorTextStyle: {
+    fontSize: 20,
+    alignSelf: 'center',
+    color: 'red'
+  }
 }
-}
+
+    
+  
 
 const mapStateToProps = state => {
   return { email:state.auth.email, 

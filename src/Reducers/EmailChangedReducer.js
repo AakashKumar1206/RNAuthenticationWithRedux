@@ -20,10 +20,10 @@ export const EmailChangedReducer = (state=Initial_state,action)=>{
         return {...state,user:action.payload ,email:'', password:''}
          
         case SpinnerChange :
-        return {...state, loading:true}
-        
+        return {...state, loading:true,error:''}
+
         case  Login_Failed:
-        return {...state, error:'Authentication Failed', email:'', password:''}
+        return {...state, error:'Authentication Failed', password:'',loading:false}
 
         
         default:
