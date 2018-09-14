@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
-import { View } from 'react-native';
+import { View,Text } from 'react-native';
 import { connect } from 'react-redux';
-import firebase from 'firebase';
 import Input from  './Input';
 import CardSection from './CardSection'
 import Button from './Button';
+import Spinner from './Spinner'
 import {emailChanged,passwordChanged,loginUser} from '../Actions'
 
 
@@ -26,6 +26,27 @@ class LoginForm extends Component{
 
         this.props.loginUser({email,password})
     }
+
+    showError(){
+       
+            <View>
+                <Text style={{color:"red"}}>{this.props.error}</Text>
+            </View>
+        
+    }
+
+    renderButton(){
+        if(this.props.loading===true){
+            return <Spinner size="large" />
+        }
+
+        else {
+            return (
+                <Button onPress={this.loginUserInput.bind(this)}>Login</Button>
+            )
+        }
+    }
+
     render(){
         return(
             <View style= {styles.InputField}>
@@ -45,9 +66,12 @@ class LoginForm extends Component{
                 />
             </CardSection>
 
+            {this.showError()}
+            
             <CardSection>
-                <Button onPress={this.loginUserInput.bind(this)}>Login</Button>
+            {this.renderButton()}
             </CardSection>
+               
             </View>
         )
     }
@@ -64,7 +88,9 @@ InputField:{
 const mapStateToProps = state => {
   return { email:state.auth.email, 
             password:state.auth.password, 
-            user:state.auth.user
+            user:state.auth.user,
+            error:state.auth.error,
+            loading:state.auth.loading
         }
 };
 export default connect(mapStateToProps,{emailChanged, passwordChanged ,loginUser})(LoginForm)
